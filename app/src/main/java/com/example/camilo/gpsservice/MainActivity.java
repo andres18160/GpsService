@@ -1,6 +1,10 @@
 package com.example.camilo.gpsservice;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -32,7 +36,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        GpsService.setUpdateListener(this);
+        SolicitarPermisosGPS();
+
 
     }
 
@@ -47,16 +52,14 @@ public class MainActivity extends AppCompatActivity {
      * Inicia el servicio
      */
     private void iniciarCronometro() {
-        Intent service = new Intent(this, GpsService.class);
-        startService(service);
+
     }
 
     /**
      * Finaliza el servicio
      */
     private void pararCronometro() {
-        Intent service = new Intent(this, GpsService.class);
-        stopService(service);
+
     }
 
     /**
@@ -66,5 +69,38 @@ public class MainActivity extends AppCompatActivity {
      */
     public void actualizarCronometro(double tiempo) {
         textoCronometro.setText(String.format("%.2f", tiempo) + "s");
+    }
+
+
+    private void SolicitarPermisosGPS() {
+        int permissionCheck = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION);
+
+        if (permissionCheck == PackageManager.PERMISSION_DENIED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        1);
+            }
+
+
+        }
+
+        int permissionCheckInfoPhone=ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_PHONE_STATE);
+        if (permissionCheck == PackageManager.PERMISSION_DENIED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.READ_PHONE_STATE)) {
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.READ_PHONE_STATE},
+                        1);
+            }
+
+
+        }
     }
 }

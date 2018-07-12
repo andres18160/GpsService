@@ -2,4 +2,8 @@
     <string name="app_name">GpsService</string>
     <string name="btn_iniciar">Iniciar</string>
     <string name="btn_finalizar">Finalizar</string>
+    <string name="service_message_Job">Servicio Job Iniciado</string>
+    <string name="service_message_Intent">Servicio Intent Iniciado</string>
+    <string name="boot_message">Auto Arranque Iniciado</string>
+
 </resources>

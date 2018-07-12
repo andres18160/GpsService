@@ -3,6 +3,13 @@
     package="com.example.camilo.gpsservice">
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.Manifest.permission.READ_PHONE_STATE" />
+    <uses-feature android:name="android.hardware.location.gps"/>
 
     <application
         android:allowBackup="true"
@@ -20,12 +27,14 @@
         </activity>
 
         <service
-            android:name=".GpsService"/>
+            android:name=".BackgroundIntentService"
+            android:exported="false" />
+        <service
+            android:name=".BackgroundJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <receiver
-            android:name=".AutoArranque"
-            android:enabled="true"
-            android:exported="true">
+            android:name=".BootReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
