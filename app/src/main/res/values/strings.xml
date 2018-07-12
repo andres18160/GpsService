@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">GpsService</string>
+    <string name="btn_iniciar">Iniciar</string>
+    <string name="btn_finalizar">Finalizar</string>
+</resources>
