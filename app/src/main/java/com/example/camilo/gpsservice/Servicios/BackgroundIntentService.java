@@ -1,4 +1,4 @@
-package com.example.camilo.gpsservice;
+package com.example.camilo.gpsservice.Servicios;
 
 import android.app.IntentService;
 import android.content.Intent;
@@ -6,6 +6,8 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.example.camilo.gpsservice.R;
 
 
 public class BackgroundIntentService extends IntentService {
@@ -21,7 +23,7 @@ public class BackgroundIntentService extends IntentService {
         mHandler.post(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(getApplicationContext(),R.string.service_message_Intent, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), R.string.service_message_Intent, Toast.LENGTH_SHORT).show();
 
             }
         });

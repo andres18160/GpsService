@@ -1,4 +1,4 @@
-package com.example.camilo.gpsservice;
+package com.example.camilo.gpsservice.Servicios;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -11,6 +11,8 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.widget.Toast;
+
+import com.example.camilo.gpsservice.R;
 
 public class BootReceiver extends BroadcastReceiver {
 

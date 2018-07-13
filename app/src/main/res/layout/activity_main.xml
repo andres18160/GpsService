@@ -1,29 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical" >
+<RelativeLayout     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient">
 
-    <TextView
-        android:id="@+id/cronometro"
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="20dp"
-        android:background="#147"
-        android:textColor="#fff"
-        android:gravity="center" />
 
-    <Button
-        android:id="@+id/btn_iniciar"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/btn_iniciar" />
+    <RelativeLayout
+        android:id="@+id/relativeLayoutSuperior"
+        android:layout_width="match_parent"
+        android:layout_height="308dp">
 
-    <Button
-        android:id="@+id/btn_finalizar"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/btn_finalizar" />
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="311dp"
+            android:layout_height="231dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="14dp"
+            app:srcCompat="@drawable/logo" />
 
-</LinearLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_Usuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:textSize="16dp"
+            app:errorEnabled="true"
+            app:errorTextAppearance="@style/error">
+
+            <EditText
+                android:id="@+id/txtUserNmae"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/txtUsuario"
+                android:inputType="textPersonName" />
+        </android.support.design.widget.TextInputLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayoutInferior"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/relativeLayoutSuperior">
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_contrasena"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="49dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            app:errorEnabled="true"
+            app:errorTextAppearance="@style/error">
+
+            <EditText
+                android:id="@+id/txtClave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/txtclave"
+                android:inputType="textPassword" />
+        </android.support.design.widget.TextInputLayout>
+
+        <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
+            android:id="@+id/btnLogin"
+            android:layout_width="343dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="111dp"
+            android:background="@drawable/button_shape_default_rounded"
+            android:onClick="Login"
+            android:text="@string/BtnIngresar"
+            android:textColor="@android:color/white"
+            app:spinning_bar_color="#fff"
+            app:spinning_bar_padding="6dp"
+            app:spinning_bar_width="4dp" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

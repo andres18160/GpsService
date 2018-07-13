@@ -5,5 +5,36 @@
     <string name="service_message_Job">Servicio Job Iniciado</string>
     <string name="service_message_Intent">Servicio Intent Iniciado</string>
     <string name="boot_message">Auto Arranque Iniciado</string>
+    <string name="BtnIngresar">iniciar sesión</string>
+    <string name="txtUsuario">Usuario</string>
+    <string name="txtclave">Contraseña</string>
+    <string name="txtNombre">Nombre</string>
+    <string name="txtApellido">Apellido</string>
+    <string name="buscar">Buscar</string>
+    <string name="guardar">Guardar</string>
+    <string name="eliminar">Eliminar</string>
+    <string name="actualizar">Actualizar</string>
+    <string name="msUsernameRequerido">El nombre de usuario es requerido!</string>
+    <string name="msPasswordRequerido">La contraseña el requerida!</string>
+    <string name="msUsarioInvalido">Usuario o contraseña   incorrecta</string>
+    <string name="cerraraSesion">Cerrar sesión</string>
+    <string name="msCerrarApp">Estas seguro de cerrar la aplicación?</string>
+    <string name="si">Si</string>
+    <string name="no">NO</string>
+    <string name="err_msg_nombre">Ingrese un nombre</string>
+    <string name="err_msg_usuario">Ingrese un nombre de usuario</string>
+    <string name="err_msg_apellido">Ingrese un Apellido</string>
+    <string name="err_msg_contrasena">Ingrese una contraseña</string>
+    <string name="err_msg_requerido">Campo requerido</string>
+    <string name="btnAdminUser">Usuarios</string>
+    <string name="btnAdminUserText">Administración de usuarios</string>
+    <string name="btnOperacion">Operación</string>
+    <string name="btnOperacionText">Realizar Pesaje</string>
+    <string name="btnConfiguracion">Configuración</string>
+    <string name="btnConfiguracionText">Comunicación con indicador</string>
+    <string name="btnInforme">Informe</string>
+    <string name="btnInformeText">Registros de operación</string>
+    <string name="btnEnviarInfo">Enviar</string>
+    <string name="btnEnviarInfoText">Enviar Información</string>
 
 </resources>
