@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 public class BootReceiver extends BroadcastReceiver {
 
-    private static final int PERIOD_MS = 5000;
+    private static final int PERIOD_MS = 10000;
 
     @Override
     public void onReceive(Context context, Intent intent) {
