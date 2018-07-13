@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
+import android.provider.Settings.System;
 import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
@@ -49,13 +50,15 @@ public class BackgroundJobService extends JobService {
     private Timer temporizador = new Timer();
     private static final long INTERVALO_ACTUALIZACION = 5000; // En ms
 
+    private  Context contexto=this;
+
     @Override
     public boolean onStartJob(final JobParameters params) {
         Log.d("Coordenada","Servicio INICIADO");
         IniciarGps();
                 temporizador.scheduleAtFixedRate(new TimerTask() {
                     public void run() {
-                        procesarCoordenadas();
+                        procesarCoordenadas(params);
                       //  jobFinished(params, false);
                     }
                 }, 0, INTERVALO_ACTUALIZACION);
@@ -68,6 +71,7 @@ public class BackgroundJobService extends JobService {
     public boolean onStopJob(JobParameters jobParameters) {
         locationManager.removeUpdates(locationListener);
         Log.i("Coordenada","Servicio Saliendo");
+        jobFinished(jobParameters, false);
         BootReceiver.scheduleJob(getApplicationContext());
         return false;
     }
@@ -80,6 +84,7 @@ public class BackgroundJobService extends JobService {
             @Override
             public void onLocationChanged(Location location) {
                 coordenadas=location.getLatitude()+" "+location.getLongitude();
+                Log.d("Coordenadas detectadas",coordenadas);
                 latitud=String.valueOf(location.getLatitude());
                 longitud=String.valueOf(location.getLongitude());
             }
@@ -105,19 +110,20 @@ public class BackgroundJobService extends JobService {
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,0,0,locationListener);
     }
 
-    private void procesarCoordenadas(){
+    private void procesarCoordenadas(final JobParameters params){
         //Toast.makeText(getApplicationContext(), "Coordenadas= "+coordenadas, Toast.LENGTH_SHORT).show();
 
         if(longitud=="" || latitud=="")
             return;
 
             RequestQueue requestQueue = Volley.newRequestQueue(this);
-            String URL = "http://10.10.41.75/php_service/Coordenadas.php";
+            String URL = "http://192.168.1.123/php_service/Coordenadas.php";
             StringRequest jsonObjRequest = new StringRequest(Request.Method.POST,URL,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
                             Log.i("onResponse", response);
+                            jobFinished(params, false);
                         }
                     }, new Response.ErrorListener() {
 
@@ -125,7 +131,9 @@ public class BackgroundJobService extends JobService {
                 public void onErrorResponse(VolleyError error) {
                     VolleyLog.d("volley", "Error: " + error.getMessage());
                     error.printStackTrace();
-                    Log.e("onErrorResponse", error.getMessage());
+                   // Log.e("onErrorResponse", error.getMessage());
+                    jobFinished(params, false);
+                    BootReceiver.scheduleJob(getApplicationContext());
                 }
             }) {
 
@@ -137,11 +145,10 @@ public class BackgroundJobService extends JobService {
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {
                     Map<String, String> params = new HashMap<String, String>();
-                  //  TelephonyManager tm = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
-                   // String device_id = tm.getDeviceId();
+                    String androidID = System.getString(contexto.getContentResolver(), Settings.Secure.ANDROID_ID);
                     params.put("Longitud", longitud);
                     params.put("Latitud", latitud);
-                    params.put("Mac", "0001");
+                    params.put("Mac", androidID);
                     params.put("FechaHora", "2018-07-12 02:07:00");
                     return params;
                 }
@@ -152,6 +159,7 @@ public class BackgroundJobService extends JobService {
 
         Log.d("Coordenada",coordenadas);
     }
+
 
 
 }
