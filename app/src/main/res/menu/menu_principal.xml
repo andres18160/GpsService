@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".principalActivity">
+    <item android:id="@+id/CerrarSession"
+        android:title="@string/cerraraSesion"
+        android:icon="@android:drawable/ic_lock_idle_lock"
+        app:showAsAction="always"/>
+
+</menu>

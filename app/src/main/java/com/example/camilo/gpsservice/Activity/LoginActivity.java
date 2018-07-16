@@ -1,16 +1,11 @@
-package com.example.camilo.gpsservice;
+package com.example.camilo.gpsservice.Activity;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Vibrator;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,32 +20,28 @@ import android.widget.TextView;
 import android.support.design.widget.TextInputLayout;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.camilo.gpsservice.Clases.ConfigureApp;
 import com.example.camilo.gpsservice.Clases.Constant;
 import com.example.camilo.gpsservice.Datos.TablaUsuarios;
 import com.example.camilo.gpsservice.Entidades.EnUsuario;
+import com.example.camilo.gpsservice.Entidades.ResponseLogin;
+import com.example.camilo.gpsservice.R;
+import com.google.gson.Gson;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import br.com.simplepass.loading_button_lib.customViews.CircularProgressButton;
 
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
     private final String baseUrl="http://lasaciorestapi.azurewebsites.net/LasaCIORestApi.svc/";
     private EnUsuario enUser=new EnUsuario();
     private TablaUsuarios cdUsuario=new TablaUsuarios(this);
@@ -63,13 +54,13 @@ public class MainActivity extends AppCompatActivity {
     Animation animShake;
     private TextInputLayout input_Usuario,input_contrasena;
     private Context contexto=this;
-    String tag_json_arry="jarray_req";
+    String TAG="login";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        SolicitarPermisosGPSyPhone();
+
 
         RelativeLayoutSuperior=(RelativeLayout)findViewById(R.id.relativeLayoutSuperior);
         RelativeLayoutInferior=(RelativeLayout)findViewById(R.id.relativeLayoutInferior);
@@ -87,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
         enUser=cdUsuario.BuscarUsuarioActivo();
         if(enUser!=null){
-            Intent i = new Intent(getApplicationContext(),Menu.class);
+            Intent i = new Intent(getApplicationContext(),MenuPrincipal.class);
             i.putExtra("UserName",enUser.getNombreDeUsuario());
             startActivity(i);
             overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
@@ -129,65 +120,14 @@ public class MainActivity extends AppCompatActivity {
 
         input_Usuario.setErrorEnabled(false);
         input_contrasena.setErrorEnabled(false);
-
-        if(!ValidarUsuario()){
-            ms= (String) getResources().getText(R.string.msUsarioInvalido);
-            MensajeToast(ms);
-            return;
-        }
-        AsyncTask<String,String,String> demoCargando=new AsyncTask<String, String, String>() {
-            @Override
-            protected String doInBackground(String... strings) {
-                try{
-                    Thread.sleep(3000);
-                    postData();
-                    Log.d("Login","Saliendo");
-
-                }catch (InterruptedException e){
-                    e.printStackTrace();
-                }
-                return "ok";
-
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                if(s.equals("ok")){
-                    btnLoginProgressBar.doneLoadingAnimation(Color.parseColor("#333639"), BitmapFactory.decodeResource(getResources(),R.drawable.ic_done_white_48dp));
-                    Intent i = new Intent(getApplicationContext(),Menu.class);
-                    i.putExtra("UserName",enUser.getNombreDeUsuario());
-                    startActivity(i);
-                    overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
-                    finish();
-                }
-            }
-        };
         btnLoginProgressBar.startAnimation();
-        demoCargando.execute();
+        postData();
 
 
 
 
     }
-    private boolean ValidarUsuario(){
-        username=txtUserName.getText().toString();
-        clave=txtPassword.getText().toString();
-        enUser=cdUsuario.ValidarUsuario(username,clave);
-        if(enUser==null){
-            if(username.equals("admin")&& clave.equals("1987")){
-                enUser=new EnUsuario();
-                enUser.setNombreDeUsuario(username);
-                return true;
-            }else{
-                return false;
-            }
-        }else{
-            enUser.setEstado("Activo");
-            cdUsuario.ActualizarEstadoUsuario(enUser);
-            return true;
-        }
 
-    }
     public void MensajeToast(String mensaje){
         Toast toast = Toast.makeText(this, mensaje, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
@@ -195,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
     }
     @Override
     public void onBackPressed(){
-        final AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);
+        final AlertDialog.Builder builder=new AlertDialog.Builder(LoginActivity.this);
         builder.setMessage(R.string.msCerrarApp);
         builder.setCancelable(true);
         builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
@@ -219,61 +159,56 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-
-    private void SolicitarPermisosGPSyPhone() {
-        int permissionCheck = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION);
-
-        if (permissionCheck == PackageManager.PERMISSION_DENIED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.ACCESS_FINE_LOCATION)) {
-
-            } else {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                        1);
-            }
-
-
-        }
-
-        int permissionCheckInfoPhone=ContextCompat.checkSelfPermission(this,
-                Manifest.permission.READ_PHONE_STATE);
-        if (permissionCheckInfoPhone == PackageManager.PERMISSION_DENIED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.READ_PHONE_STATE)) {
-            } else {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.READ_PHONE_STATE},
-                        1);
-            }
-
-
-        }
-    }
-
     public void postData(){
+
+        final Gson gson = new Gson();
+
         HashMap<String, String> params = new HashMap<String, String>();
-        params.put("username",txtUserName.getText().toString());
-        params.put("password",txtPassword.getText().toString());
+        params.put("UserName",txtUserName.getText().toString());
+        params.put("Password",txtPassword.getText().toString());
+        RequestQueue requestQueue = Volley.newRequestQueue(contexto);
         JsonObjectRequest req=new JsonObjectRequest (Constant.CIO_URL_LOGIN,new JSONObject(params),new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
+                            Log.d(TAG,response.toString());
                             VolleyLog.v("Response:%n %s", response.toString(4));
+                            if(response.getString("Response")=="null"){
+                                MensajeToast((String) getResources().getText(R.string.msUsarioInvalido));
+                                btnLoginProgressBar.revertAnimation();
+                            }
+                            final ResponseLogin loginUser = gson.fromJson(response.getJSONObject("Response").toString(), ResponseLogin.class);
+                            enUser=new EnUsuario();
+                            enUser.setCodeUser(loginUser.getPersonaId().toString());
+                            enUser.setToken(loginUser.getToken());
+                            enUser.setBase(loginUser.getBase());
+                            enUser.setClave(txtPassword.getText().toString());
+                            enUser.setNombreDeUsuario(txtUserName.getText().toString());
+                            enUser.setNombres(loginUser.getNombre());
+                            enUser.setEstado("Activo");
+                            btnLoginProgressBar.doneLoadingAnimation(Color.parseColor("#333639"), BitmapFactory.decodeResource(getResources(),R.drawable.ic_done_white_48dp));
+                            cdUsuario.GuardarUsuario(enUser);
+                            Intent i = new Intent(getApplicationContext(),MenuPrincipal.class);
+                            i.putExtra("UserName",enUser.getNombreDeUsuario());
+                            startActivity(i);
+                            overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
+                            finish();
+
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            btnLoginProgressBar.revertAnimation();
                         }
                     }
                     },new Response.ErrorListener(){
                         @Override
                         public void onErrorResponse(VolleyError error){
-                            VolleyLog.e("Error: ", error.getMessage());
+                            VolleyLog.e(TAG, error.getMessage());
+                            btnLoginProgressBar.revertAnimation();
                         }
                 });
 
-        ConfigureApp.getmInstance().addToRequestQueue(req,tag_json_arry);
+        btnLoginProgressBar.startAnimation();
+        requestQueue.add(req);
 
     }
 }

@@ -10,11 +10,11 @@
     <RelativeLayout
         android:id="@+id/relativeLayoutSuperior"
         android:layout_width="match_parent"
-        android:layout_height="308dp">
+        android:layout_height="352dp">
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="311dp"
+            android:layout_width="386dp"
             android:layout_height="231dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
@@ -47,11 +47,12 @@
     <RelativeLayout
         android:id="@+id/relativeLayoutInferior"
         android:layout_width="match_parent"
-        android:layout_height="350dp"
+        android:layout_height="305dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/relativeLayoutSuperior">
+        android:layout_below="@+id/relativeLayoutSuperior"
+        android:layout_marginTop="2dp">
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/input_contrasena"
@@ -59,7 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="49dp"
+
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             app:errorEnabled="true"
@@ -78,9 +79,8 @@
             android:id="@+id/btnLogin"
             android:layout_width="343dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/input_contrasena"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="111dp"
             android:background="@drawable/button_shape_default_rounded"
             android:onClick="Login"
             android:text="@string/BtnIngresar"
