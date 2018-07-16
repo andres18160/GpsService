@@ -25,10 +25,13 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation 'com.android.volley:volley:1.1.0'
     implementation 'com.android.support:design:27.1.1'
+    //Libreria para consumir servicios web
+    implementation 'com.android.volley:volley:1.1.0'
+
     //Agregar libreria del progressbar circular
     implementation 'com.github.HotBitmapGG:RingProgressBar:V1.2.3'
     implementation 'br.com.simplepass:loading-button-android:1.14.0'
     implementation 'com.frosquivel:magicalcamera:5.0.5'
+
 }

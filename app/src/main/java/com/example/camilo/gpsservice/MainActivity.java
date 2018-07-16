@@ -14,6 +14,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -29,11 +30,18 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.camilo.gpsservice.Clases.ConfigureApp;
+import com.example.camilo.gpsservice.Clases.Constant;
 import com.example.camilo.gpsservice.Datos.TablaUsuarios;
 import com.example.camilo.gpsservice.Entidades.EnUsuario;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -43,6 +51,7 @@ import br.com.simplepass.loading_button_lib.customViews.CircularProgressButton;
 
 
 public class MainActivity extends AppCompatActivity {
+    private final String baseUrl="http://lasaciorestapi.azurewebsites.net/LasaCIORestApi.svc/";
     private EnUsuario enUser=new EnUsuario();
     private TablaUsuarios cdUsuario=new TablaUsuarios(this);
     TextView txtUserName,txtPassword;
@@ -54,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
     Animation animShake;
     private TextInputLayout input_Usuario,input_contrasena;
     private Context contexto=this;
+    String tag_json_arry="jarray_req";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -130,6 +140,9 @@ public class MainActivity extends AppCompatActivity {
             protected String doInBackground(String... strings) {
                 try{
                     Thread.sleep(3000);
+                    postData();
+                    Log.d("Login","Saliendo");
+
                 }catch (InterruptedException e){
                     e.printStackTrace();
                 }
@@ -240,40 +253,27 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public String postData(){
-        // Instantiate the RequestQueue.
-        RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
-        //this is the url where you want to send the request
-        //TODO: replace with your own url to send request, as I am using my own localhost for this tutorial
-        String url = "http://lasabrsapi.azurewebsites.net/api/v1/token";
-
-        // Request a string response from the provided URL.
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
+    public void postData(){
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("username",txtUserName.getText().toString());
+        params.put("password",txtPassword.getText().toString());
+        JsonObjectRequest req=new JsonObjectRequest (Constant.CIO_URL_LOGIN,new JSONObject(params),new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(String response) {
-                        // Display the response string.
-                       // _response.setText(response);
+                    public void onResponse(JSONObject response) {
+                        try {
+                            VolleyLog.v("Response:%n %s", response.toString(4));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                //_response.setText("That didn't work!");
-            }
-        }) {
-            //adding parameters to the request
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("username",txtUserName.getText().toString());
-                params.put("password",txtPassword.getText().toString());
-                return params;
-            }
-        };
-        // Add the request to the RequestQueue.
-        queue.add(stringRequest);
+                    },new Response.ErrorListener(){
+                        @Override
+                        public void onErrorResponse(VolleyError error){
+                            VolleyLog.e("Error: ", error.getMessage());
+                        }
+                });
 
+        ConfigureApp.getmInstance().addToRequestQueue(req,tag_json_arry);
 
-        return "";
     }
 }
