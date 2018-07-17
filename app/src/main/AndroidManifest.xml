@@ -21,6 +21,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
         <activity android:name=".Activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -43,7 +47,9 @@
         </receiver>
 
         <activity android:name=".Activity.MenuPrincipal" />
-        <activity android:name=".Activity.AdminServiceActivity"></activity>
+        <activity android:name=".Activity.AdminServiceActivity" />
+        <activity android:name=".Activity.CoordenadasActivity" />
+        <activity android:name=".Activity.BeaconActivity"></activity>
     </application>
 
 </manifest>

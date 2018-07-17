@@ -40,7 +40,7 @@
                 android:onClick="ConfiguracionService"
                 android:clickable="true"
                 android:focusable="true"
-                android:background="#728a74"
+                android:background="#9691de"
                 android:orientation="vertical"
                 android:weightSum="3">
 
@@ -71,6 +71,9 @@
                 android:layout_weight="1"
                 android:background="#cb707f"
                 android:orientation="vertical"
+                android:onClick="ViewBeacon"
+                android:clickable="true"
+                android:focusable="true"
                 android:weightSum="3">
 
                 <ImageView
@@ -79,7 +82,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="8dp"
                     android:layout_weight="1.5"
-                    android:src="@android:drawable/ic_menu_manage" />
+                    android:src="@android:drawable/ic_dialog_map" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -87,7 +90,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Settings"
+                    android:text="Beacon"
                     android:textColor="#fff"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -109,6 +112,9 @@
                 android:layout_weight="1"
                 android:background="#a180a4"
                 android:orientation="vertical"
+                android:onClick="ViewCoordenadas"
+                android:clickable="true"
+                android:focusable="true"
                 android:weightSum="3">
 
                 <ImageView
@@ -125,7 +131,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Wishlist"
+                    android:text="Coordenadas"
                     android:textColor="#fff"
                     android:textSize="14sp" />
             </LinearLayout>

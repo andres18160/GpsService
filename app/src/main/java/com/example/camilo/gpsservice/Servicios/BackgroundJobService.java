@@ -10,6 +10,8 @@ import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 
+import android.os.Handler;
+import android.os.Message;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -27,6 +29,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.camilo.gpsservice.Activity.CoordenadasActivity;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -44,8 +47,6 @@ import java.util.Map;
 public class BackgroundJobService extends JobService implements
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
-
-    private  Context contexto=this;
     private static final String TAG = BackgroundJobService.class.getSimpleName();
     GoogleApiClient mLocationClient;
     LocationRequest mLocationRequest = new LocationRequest();
@@ -54,11 +55,25 @@ public class BackgroundJobService extends JobService implements
     public static final String EXTRA_LATITUDE = "extra_latitude";
     public static final String EXTRA_LONGITUDE = "extra_longitude";
     private JobParameters JobParams;
+    public static CoordenadasActivity UPDATE_LISTENER;
+    private Handler handler;
+    private  String longitud="0",latitud="0";
 
+    public static void setUpdateListener(CoordenadasActivity activity) {
+        UPDATE_LISTENER = activity;
+    }
 
     @Override
     public boolean onStartJob(final JobParameters params) {
         JobParams=params;
+
+        handler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+
+                UPDATE_LISTENER.ActualizarCoordenadas(latitud,longitud);
+            }
+        };
         mLocationClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
@@ -124,7 +139,11 @@ public class BackgroundJobService extends JobService implements
         Log.d(TAG, "Location changed");
 
         if (location != null) {
-            Log.d(TAG, "== location != null");
+            longitud=String.valueOf(location.getLongitude());
+            latitud=String.valueOf(location.getLatitude());
+            if(UPDATE_LISTENER != null) {
+                handler.sendEmptyMessage(0);
+            }
             procesarCoordenadas(JobParams,String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()));
 
         }

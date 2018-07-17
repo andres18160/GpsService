@@ -35,5 +35,11 @@ dependencies {
     implementation 'com.github.HotBitmapGG:RingProgressBar:V1.2.3'
     implementation 'br.com.simplepass:loading-button-android:1.14.0'
     implementation 'com.frosquivel:magicalcamera:5.0.5'
+    //Maps
+    //noinspection GradleCompatible
+    implementation 'com.google.android.gms:play-services:11.0.1'
+    implementation 'com.google.android.gms:play-services-maps:11.0.1'
+    //Beacon
+    implementation 'org.altbeacon:android-beacon-library:2.15'
 
 }

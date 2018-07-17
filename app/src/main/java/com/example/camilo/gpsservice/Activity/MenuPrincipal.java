@@ -59,7 +59,20 @@ public class MenuPrincipal extends AppCompatActivity {
         overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
     }
 
-
+    public void ViewCoordenadas(View v){
+        vib.vibrate(50);
+        Intent i = new Intent(getApplicationContext(),CoordenadasActivity.class);
+        i.putExtra("UserName",usuario.getNombreDeUsuario());
+        startActivity(i);
+        overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
+    }
+    public void ViewBeacon(View v){
+        vib.vibrate(50);
+        Intent i = new Intent(getApplicationContext(),BeaconActivity.class);
+        i.putExtra("UserName",usuario.getNombreDeUsuario());
+        startActivity(i);
+        overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
+    }
     @Override public boolean onCreateOptionsMenu(android.view.Menu menu){
 
         getMenuInflater().inflate(R.menu.menu_principal,menu);
