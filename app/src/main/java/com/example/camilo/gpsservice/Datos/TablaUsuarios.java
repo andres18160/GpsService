@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
+import android.util.Log;
 
 import com.example.camilo.gpsservice.Entidades.EnUsuario;
 
@@ -62,6 +63,7 @@ public final class TablaUsuarios {
             values.put(CLAVE, usuario.getClave());
             values.put(TOKEN, usuario.getToken());
             values.put(CODE_USER, usuario.getCodeUser());
+            values.put(ESTADO, usuario.getEstado());
             //inserta los datos y devuelve la clave primaria del registro insertado
             long newRowId = db.insert(TABLE_NAME, null, values);
             if(newRowId==-1){
@@ -332,7 +334,7 @@ public final class TablaUsuarios {
             );
 
             c.moveToFirst();//mueve el cursor al primer registro del resultSet
-            usuario.set_id(Integer.parseInt(c.getString(0)));
+          //  usuario.set_id(Integer.parseInt(c.getString(0)));
             usuario.setNombres(c.getString(1));
             usuario.setNombreDeUsuario(c.getString(2));
             usuario.setClave(c.getString(3));
@@ -345,6 +347,7 @@ public final class TablaUsuarios {
 
 
         }catch(Exception e){
+            Log.e("BuscarUsuarioActivo",e.getMessage());
             return null;
         }
     }

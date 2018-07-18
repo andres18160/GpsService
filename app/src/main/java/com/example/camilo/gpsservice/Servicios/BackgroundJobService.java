@@ -173,7 +173,7 @@ public class BackgroundJobService extends JobService implements
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.i("onResponse", response);
+                        Log.w(TAG,"Response= "+ response);
                         jobFinished(params, false);
                         BootReceiver.scheduleJob(getApplicationContext());
                     }
@@ -181,7 +181,7 @@ public class BackgroundJobService extends JobService implements
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                VolleyLog.d("volley", "Error: " + error.getMessage());
+                VolleyLog.d(TAG, "Error: " + error.getMessage());
                 error.printStackTrace();
                 // Log.e("onErrorResponse", error.getMessage());
                 jobFinished(params, false);

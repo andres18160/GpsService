@@ -28,8 +28,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
+            android:paddingLeft="50dp"
+            android:paddingRight="50dp"
             android:textSize="16dp"
             app:errorEnabled="true"
             app:errorTextAppearance="@style/error">
@@ -61,8 +61,9 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
 
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
+            android:paddingLeft="50dp"
+            android:paddingRight="50dp"
+            android:textSize="16dp"
             app:errorEnabled="true"
             app:errorTextAppearance="@style/error">
 
@@ -79,8 +80,9 @@
             android:id="@+id/btnLogin"
             android:layout_width="343dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/input_contrasena"
+            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
+            android:layout_marginBottom="82dp"
             android:background="@drawable/button_shape_default_rounded"
             android:onClick="Login"
             android:text="@string/BtnIngresar"

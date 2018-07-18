@@ -137,14 +137,14 @@ public class BackgroundIntentService extends IntentService implements
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.i("onResponse", response);
+                        Log.i(TAG, "Response="+response);
                         BootReceiver.scheduleIntent(getApplicationContext());
                     }
                 }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                VolleyLog.d("volley", "Error: " + error.getMessage());
+                VolleyLog.d(TAG, "Error: " + error.getMessage());
                 error.printStackTrace();
                 BootReceiver.scheduleIntent(getApplicationContext());
             }

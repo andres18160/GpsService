@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.camilo.gpsservice.R;
@@ -21,16 +22,25 @@ public class BootReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Toast.makeText(context, R.string.boot_message, Toast.LENGTH_SHORT).show();
-
+        Log.d("BootReceiver","Auto Arranque Iniciado");
         if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             scheduleIntent(context);
         } else {
             scheduleJob(context);
+            //scheduleIntentBeacon(context);
         }
     }
 
     public static void scheduleIntent(Context context){
         Intent newIntent = new Intent(context, BackgroundIntentService.class);
+        PendingIntent pendingIntent = PendingIntent.getService(context, 1, newIntent,
+                PendingIntent.FLAG_CANCEL_CURRENT);
+        AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        manager.setInexactRepeating(AlarmManager.RTC, System.currentTimeMillis(), PERIOD_MS,
+                pendingIntent);
+    }
+    public static void scheduleIntentBeacon(Context context){
+        Intent newIntent = new Intent(context, BackgroundIntentrServiceBeacon.class);
         PendingIntent pendingIntent = PendingIntent.getService(context, 1, newIntent,
                 PendingIntent.FLAG_CANCEL_CURRENT);
         AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);

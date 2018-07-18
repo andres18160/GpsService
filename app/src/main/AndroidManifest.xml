@@ -25,7 +25,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".Activity.LoginActivity">
+        <activity android:name=".Activity.LoginActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -46,10 +46,14 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".Activity.MenuPrincipal" />
-        <activity android:name=".Activity.AdminServiceActivity" />
-        <activity android:name=".Activity.CoordenadasActivity" />
-        <activity android:name=".Activity.BeaconActivity"></activity>
+        <activity android:name=".Activity.MenuPrincipal" android:screenOrientation="portrait" />
+        <activity android:name=".Activity.AdminServiceActivity" android:screenOrientation="portrait" />
+        <activity android:name=".Activity.CoordenadasActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".Activity.BeaconActivity" android:screenOrientation="portrait" />
+
+        <service
+            android:name=".Servicios.BackgroundIntentrServiceBeacon"
+            android:exported="false"></service>
     </application>
 
 </manifest>

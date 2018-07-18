@@ -41,5 +41,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:11.0.1'
     //Beacon
     implementation 'org.altbeacon:android-beacon-library:2.15'
+    //Custom Dialog
+    implementation 'com.yarolegovich:lovely-dialog:1.1.0'
 
 }

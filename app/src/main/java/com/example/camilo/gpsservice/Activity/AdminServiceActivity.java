@@ -50,6 +50,7 @@ public class AdminServiceActivity extends AppCompatActivity {
             sendBroadcast(intent);
         } else {
             BootReceiver.scheduleJob(getApplicationContext());
+            //BootReceiver.scheduleIntentBeacon(getApplicationContext());
         }
 
         ValidarInicioServicio();

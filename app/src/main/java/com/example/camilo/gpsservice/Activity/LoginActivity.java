@@ -1,12 +1,10 @@
 package com.example.camilo.gpsservice.Activity;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Vibrator;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,6 +30,7 @@ import com.example.camilo.gpsservice.Entidades.EnUsuario;
 import com.example.camilo.gpsservice.Entidades.ResponseLogin;
 import com.example.camilo.gpsservice.R;
 import com.google.gson.Gson;
+import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -135,23 +134,23 @@ public class LoginActivity extends AppCompatActivity {
     }
     @Override
     public void onBackPressed(){
-        final AlertDialog.Builder builder=new AlertDialog.Builder(LoginActivity.this);
-        builder.setMessage(R.string.msCerrarApp);
-        builder.setCancelable(true);
-        builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-        builder.setPositiveButton(R.string.si, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                finish();
-            }
-        });
-        AlertDialog alertDialog=builder.create();
-        alertDialog.show();
+        new LovelyStandardDialog(this, LovelyStandardDialog.ButtonLayout.VERTICAL)
+                .setTopColorRes(R.color.indigo)
+                .setButtonsColorRes(R.color.darkDeepOrange)
+                .setIcon(R.drawable.logo_pequeno)
+                .setTitle("Saliendo de la App")
+                .setMessage(R.string.msCerrarApp)
+                .setPositiveButton(android.R.string.ok, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finish();
+                    }
+                })
+                .setNegativeButton(android.R.string.no, null)
+                .show();
+
+
+
     }
     private void requestFocus(View view){
         if(view.requestFocus()){
@@ -187,6 +186,7 @@ public class LoginActivity extends AppCompatActivity {
                             enUser.setNombres(loginUser.getNombre());
                             enUser.setEstado("Activo");
                             btnLoginProgressBar.doneLoadingAnimation(Color.parseColor("#333639"), BitmapFactory.decodeResource(getResources(),R.drawable.ic_done_white_48dp));
+                            cdUsuario.EliminarUsuario(enUser.getNombreDeUsuario());
                             cdUsuario.GuardarUsuario(enUser);
                             Intent i = new Intent(getApplicationContext(),MenuPrincipal.class);
                             i.putExtra("UserName",enUser.getNombreDeUsuario());
