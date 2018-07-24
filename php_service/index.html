@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <title>Prueba canvas</title>
+    </head>
+        <body>	
+            <section>
+                <div>
+                    <canvas id="myCanvas" width="600" height="200" style="border:1px solid #000000;"></canvas>
+                </div>
+            </section>
+        </body>
+</html>
+<script>
+     var ctx = document.getElementById('myCanvas').getContext('2d');
+    var imgAnt = new Image();
+        imgAnt.src = 'https://cdn-img.easyicon.net/png/11836/1183688.gif';
+        var imgDispo = new Image();
+        imgDispo.src = 'https://www.shareicon.net/data/256x256/2015/09/25/107071_internet_512x512.png';
+
+
+
+
+    function dibujarDispositivo()
+    {
+            ctx.clearRect(0, 0, 600, 200);
+            ctx.drawImage(imgAnt, 0, 0,20,20);
+            ctx.drawImage(imgAnt, 100, 180,20,20);
+            ctx.drawImage(imgAnt, 200, 0,20,20);
+            ctx.drawImage(imgAnt, 300, 180,20,20);
+            ctx.drawImage(imgAnt, 400, 0,20,20);
+            ctx.drawImage(imgAnt, 500, 180,20,20);
+            var x= Math.floor((Math.random() * 600) + 1);
+            var y= Math.floor((Math.random() * 200) + 1);
+            console.log("Se ejecuto x="+x+" y="+y);
+            ctx.drawImage(imgDispo, x, y,20,20);
+            setTimeout("dibujarDispositivo()", 5000);
+    }
+
+    dibujarDispositivo();
+  
+   
+
+
+</script>
