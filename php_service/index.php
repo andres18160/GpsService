@@ -15,16 +15,16 @@ $dbConn =  connect($db);
             <section>
 
                 <div>
-                    <canvas id="myCanvas" width="600" height="200" style="border:1px solid #000000;"></canvas>
+                    <canvas id="myCanvas" width="4008" height="2834" style="border:1px solid #000000;"></canvas>
                 </div>
             </section>
             <?php
-           /*  $sql = "SELECT * FROM `beacons_detail` WHERE IdHead=(SELECT MAX(Id) FROM beacons WHERE IdPhone='3079c6c4bd209faf')";
+             $sql = "SELECT * FROM `beacons_detail` WHERE IdHead=(SELECT MAX(Id) FROM beacons WHERE IdPhone='3079c6c4bd209faf')";
              $statement = $dbConn->prepare($sql);
              $statement->execute();
            $response=$statement -> fetchAll();             
            echo "<pre>";
-           print_r($response);*/
+           print_r($response);
 
             ?>
         </body>
@@ -35,53 +35,57 @@ $dbConn =  connect($db);
         {            
             id:"00000000-0000-0000-0000-000000010000",
             num:1,
-            x:0,
-            y:0,
+            x:1800,
+            y:1060,
             distance:""
         },
         {            
             id:"72bd45c1-21f8-4814-a6e1-d836d3974880",
             num:2,
-            x:100,
-            y:180,
+            x:1560,
+            y:1140,
             distance:""
         },
         {            
             id:"00000000-0000-0000-0000-000000001000",
             num:3,
-            x:200,
-            y:0,
+            x:1800,
+            y:1250,
             distance:""
         },
         {            
-            id:"0eae3df4-102f-444f-8007-d712ffe83724",
+            id:"0eae3df4-102f-444f-8007-d712ffe83724",//ROSA
             num:4,
-            x:300,
-            y:180,
+            x:1560,
+            y:1360,
             distance:""
         },
         {            
-            id:"acc0eeff-9287-46bd-9d79-8c3f103e6684",
+            id:"acc0eeff-9287-46bd-9d79-8c3f103e6684",//AMARILLO
             num:5,
-            x:400,
-            y:0,
+            x:1800,
+            y:1470,
             distance:""
         },
         {            
-            id:"1d13b961-752e-41c3-9f0f-53ec8f623cac",
+            id:"1d13b961-752e-41c3-9f0f-53ec8f623cac",//ROJO
             num:6,
-            x:500,
-            y:180,
+            x:1560,
+            y:1580,
             distance:""
         }
         
         
-    ]
-     var ctx = document.getElementById('myCanvas').getContext('2d');
+    ];
+
+    var ctx = document.getElementById('myCanvas').getContext('2d');
     var imgAnt = new Image();
-        imgAnt.src = 'https://cdn-img.easyicon.net/png/11836/1183688.gif';
-        var imgDispo = new Image();
-        imgDispo.src = 'https://www.shareicon.net/data/256x256/2015/09/25/107071_internet_512x512.png';
+    imgAnt.src = 'https://static1.squarespace.com/static/594100ad03596ed295e03804/5943e9e2e110ebe1d7add3c7/5943e9e73e00be46daff4977/1497623021587/Beacon.png';
+    var imgDispo = new Image();
+    imgDispo.src = 'https://www.shareicon.net/data/256x256/2015/09/25/107071_internet_512x512.png';
+    var imgFondo=new Image();
+    imgFondo.src='mapa.jpg';
+
 
 
 
@@ -99,9 +103,56 @@ $dbConn =  connect($db);
             ?>
         var dispositivos=JSON.parse('<?php echo json_encode($response); ?>');
 
-            ctx.clearRect(0, 0, 600, 200);
+            ctx.clearRect(0, 0, 4008, 2834);
+
+            ctx.drawImage(imgFondo, 0,0,4008,2834);
             $.each( beacons, function( key, value ) {            
-            ctx.drawImage(imgAnt, value.x, value.y,20,20);
+               ctx.drawImage(imgAnt, value.x, value.y,25,25);
+            });      
+            var x=0;
+            var y=0;
+            ctx.beginPath();
+            $.each(dispositivos,function(ikey,i){
+                $.each( beacons, function( key, value ) {     
+                    if(i.Beacon==value.id){
+                        x=x+value.x;
+                        y=y+value.y;
+                        i.x=value.x;
+                        i.y=value.y;
+                        
+                        ctx.arc(i.x,i.y,(4008*i.distance)/100,0,2*Math.PI,false);
+                        
+                    }
+                }); 
+            });  
+            ctx.stroke();
+            x=x/3;
+            y=y/3;
+        
+            console.log("Se ejecuto x="+x+" y="+y);
+            ctx.drawImage(imgDispo, x, y,50,50);
+            setTimeout("location.reload()", 1000);
+    }
+
+
+        function dibujarDispositivoBack()
+    {       
+        <?php
+             $sql = "SELECT * FROM `beacons_detail` WHERE IdHead=(SELECT MAX(Id) FROM beacons WHERE IdPhone='3079c6c4bd209faf')";
+             $statement = $dbConn->prepare($sql);
+             $statement->execute();
+           $response=$statement -> fetchAll();             
+          // echo "<pre>";
+         //  print_r($response);
+
+            ?>
+        var dispositivos=JSON.parse('<?php echo json_encode($response); ?>');
+
+            ctx.clearRect(0, 0, 600, 200);
+
+            ctx.drawImage(imgFondo, 0,0,4008,2834);
+            $.each( beacons, function( key, value ) {            
+               ctx.drawImage(imgAnt, value.x, value.y,25,25);
             });      
             var x=0;
             var y=0;
@@ -120,7 +171,7 @@ $dbConn =  connect($db);
         
             console.log("Se ejecuto x="+x+" y="+y);
             ctx.drawImage(imgDispo, x, y,20,20);
-            setTimeout("dibujarDispositivo()", 1000);
+            setTimeout("location.reload()", 1000);
     }
 
     dibujarDispositivo();
