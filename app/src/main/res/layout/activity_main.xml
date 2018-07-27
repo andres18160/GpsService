@@ -10,12 +10,12 @@
     <RelativeLayout
         android:id="@+id/relativeLayoutSuperior"
         android:layout_width="match_parent"
-        android:layout_height="352dp">
+        android:layout_height="302dp">
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="386dp"
-            android:layout_height="231dp"
+            android:layout_width="212dp"
+            android:layout_height="192dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="14dp"
@@ -78,11 +78,11 @@
 
         <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
             android:id="@+id/btnLogin"
-            android:layout_width="343dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="82dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="35dp"
             android:background="@drawable/button_shape_default_rounded"
             android:onClick="Login"
             android:text="@string/BtnIngresar"

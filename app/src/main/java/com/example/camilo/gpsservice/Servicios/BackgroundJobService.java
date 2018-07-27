@@ -30,6 +30,7 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.camilo.gpsservice.Activity.CoordenadasActivity;
+import com.example.camilo.gpsservice.Clases.util;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -144,7 +145,7 @@ public class BackgroundJobService extends JobService implements
             if(UPDATE_LISTENER != null) {
                 handler.sendEmptyMessage(0);
             }
-            procesarCoordenadas(JobParams,String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()));
+            procesarCoordenadas(JobParams, String.valueOf(location.getLongitude()),String.valueOf(location.getLatitude()));
 
         }
     }

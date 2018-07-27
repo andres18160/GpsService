@@ -37,42 +37,48 @@ $dbConn =  connect($db);
             num:1,
             x:1800,
             y:1060,
-            distance:""
+            distance:"",
+            color:'#FF0000'
         },
         {            
             id:"72bd45c1-21f8-4814-a6e1-d836d3974880",
             num:2,
             x:1560,
             y:1140,
-            distance:""
+            distance:"",
+            color:'#FF0000'
         },
         {            
             id:"00000000-0000-0000-0000-000000001000",
             num:3,
             x:1800,
             y:1250,
-            distance:""
+            distance:"",
+            color:'#FF0000'
         },
         {            
             id:"0eae3df4-102f-444f-8007-d712ffe83724",//ROSA
             num:4,
             x:1560,
             y:1360,
-            distance:""
+            distance:"",
+            color:'#D98880'
         },
         {            
             id:"acc0eeff-9287-46bd-9d79-8c3f103e6684",//AMARILLO
             num:5,
             x:1800,
             y:1470,
-            distance:""
+            distance:"",
+            color:'#F4D03F'
         },
         {            
             id:"1d13b961-752e-41c3-9f0f-53ec8f623cac",//ROJO
             num:6,
             x:1560,
             y:1580,
-            distance:""
+            distance:"",
+            color:'#A93226'
         }
         
         
@@ -80,7 +86,7 @@ $dbConn =  connect($db);
 
     var ctx = document.getElementById('myCanvas').getContext('2d');
     var imgAnt = new Image();
-    imgAnt.src = 'https://static1.squarespace.com/static/594100ad03596ed295e03804/5943e9e2e110ebe1d7add3c7/5943e9e73e00be46daff4977/1497623021587/Beacon.png';
+    imgAnt.src = 'https://www.k-lenda.com/wp-content/themes/klenda/img/klenda/IMG_iBeacon.png';
     var imgDispo = new Image();
     imgDispo.src = 'https://www.shareicon.net/data/256x256/2015/09/25/107071_internet_512x512.png';
     var imgFondo=new Image();
@@ -111,7 +117,7 @@ $dbConn =  connect($db);
             });      
             var x=0;
             var y=0;
-            ctx.beginPath();
+            
             $.each(dispositivos,function(ikey,i){
                 $.each( beacons, function( key, value ) {     
                     if(i.Beacon==value.id){
@@ -119,13 +125,15 @@ $dbConn =  connect($db);
                         y=y+value.y;
                         i.x=value.x;
                         i.y=value.y;
-                        
-                        ctx.arc(i.x,i.y,(4008*i.distance)/100,0,2*Math.PI,false);
-                        
+                        ctx.beginPath();
+                        ctx.arc(i.x,i.y,(4008*i.distance)/100,0,2*Math.PI,false);                       
+                        ctx.strokeStyle = value.color;
+                        ctx.lineWidth = 2;
+                        ctx.stroke();                        
                     }
                 }); 
             });  
-            ctx.stroke();
+           
             x=x/3;
             y=y/3;
         
